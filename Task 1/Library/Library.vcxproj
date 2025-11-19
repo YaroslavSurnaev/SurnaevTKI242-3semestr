@@ -145,13 +145,11 @@
     <ClInclude Include="Generator.h" />
     <ClInclude Include="IStreamGenerator.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Variant7.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Exercise.cpp" />
-    <ClCompile Include="Generator.cpp" />
     <ClCompile Include="IStreamGenerator.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />

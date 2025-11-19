@@ -1,11 +1,11 @@
 #pragma once
 
-namespace miit::algebra
+namespace algebra
 {
     class Generator
     {
     public:
-        virtual ~Generator() = 0 {};
+        virtual ~Generator() = default;
         virtual int generate() = 0;
     };
 }

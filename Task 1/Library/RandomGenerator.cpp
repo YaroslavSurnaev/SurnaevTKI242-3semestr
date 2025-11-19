@@ -1,15 +1,14 @@
-#include "pch.h"
 #include "RandomGenerator.h"
 
-namespace miit::algebra
+namespace algebra
 {
-    RandomGenerator::RandomGenerator(int min, int max)
-        : distribution(min, max), generator(std::random_device{}())
+    RandomGenerator::RandomGenerator() : gen(std::random_device{}())
     {
     }
 
     int RandomGenerator::generate()
     {
-        return distribution(generator);
+        std::uniform_int_distribution<int> dist(MIN_VALUE, MAX_VALUE);
+        return dist(gen);
     }
 }

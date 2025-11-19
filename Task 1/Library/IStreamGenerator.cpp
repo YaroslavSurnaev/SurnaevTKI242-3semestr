@@ -1,7 +1,6 @@
-#include "pch.h"
 #include "IStreamGenerator.h"
 
-namespace miit::algebra
+namespace algebra
 {
     IStreamGenerator::IStreamGenerator(std::istream& in) : in(in) {}
 

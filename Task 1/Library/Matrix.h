@@ -1,42 +1,27 @@
 #pragma once
+#include <string>
+#include "Generator.h"
 
-namespace miit::algebra
+namespace algebra
 {
-    template<typename T>
     class Matrix
     {
     private:
-        T* data;
+        int* data;
         size_t size;
 
     public:
-        // Конструкторы по умолчанию
         Matrix();
         Matrix(size_t size);
         Matrix(const Matrix& other);
-        Matrix(Matrix&& other) noexcept;
-
-        // Деструктор
         ~Matrix();
 
-        // Операторы присваивания
         Matrix& operator=(const Matrix& other);
-        Matrix& operator=(Matrix&& other) noexcept;
+        int& operator[](size_t index);
+        const int& operator[](size_t index) const;
 
-        // Операторы сдвига
-        Matrix operator<<(int shift) const;
-        Matrix operator>>(int shift) const;
-
-        // Оператор разыменования
-        T& operator[](size_t index);
-        const T& operator[](size_t index) const;
-
-        // Методы
         size_t get_size() const;
         std::string to_string() const;
         void fill_with(Generator& generator);
-
-    private:
-        void resize(size_t new_size);
     };
 }

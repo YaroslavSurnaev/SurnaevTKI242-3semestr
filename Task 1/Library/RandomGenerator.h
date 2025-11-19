@@ -2,16 +2,17 @@
 #include "Generator.h"
 #include <random>
 
-namespace miit::algebra
+namespace algebra
 {
     class RandomGenerator : public Generator
     {
     private:
-        std::uniform_int_distribution<int> distribution;
-        std::mt19937 generator;
+        const int MIN_VALUE = -1000;  //  онстанта дл€ минимального значени€
+        const int MAX_VALUE = 1000;   //  онстанта дл€ максимального значени€
+        std::mt19937 gen;
 
     public:
-        RandomGenerator(int min, int max);
+        RandomGenerator();
         int generate() override;
     };
 }

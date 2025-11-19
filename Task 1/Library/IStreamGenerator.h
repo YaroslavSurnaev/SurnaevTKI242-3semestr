@@ -2,7 +2,7 @@
 #include "Generator.h"
 #include <iostream>
 
-namespace miit::algebra
+namespace algebra
 {
     class IStreamGenerator : public Generator
     {

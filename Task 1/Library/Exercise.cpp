@@ -1,7 +1,7 @@
-#include "pch.h"
 #include "Exercise.h"
+#include <iostream>
 
-namespace miit::algebra
+namespace algebra
 {
     Exercise::Exercise(size_t size, Generator* gen)
         : matrix(size), generator(gen)
@@ -14,7 +14,7 @@ namespace miit::algebra
         delete generator;
     }
 
-    Matrix<int> Exercise::get_matrix() const
+    Matrix Exercise::get_matrix() const
     {
         return matrix;
     }
