@@ -14,7 +14,7 @@ namespace algebra
         Exercise(size_t size, Generator* gen);
         virtual ~Exercise();
 
-        virtual void Task() = 0;  // Изменено на Task() без цифр
+        virtual void Task() = 0; 
 
         Matrix get_matrix() const;
         void print_matrix() const;

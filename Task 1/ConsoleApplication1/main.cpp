@@ -1,38 +1,38 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "Variant7.h"
 
 using namespace algebra;
 
 int main()
 {
-    std::cout << "=== ÂÀÐÈÀÍÒ 7 (3 êëàññà) ===" << std::endl;
+    std::cout << "=== Ð’ÐÐ Ð˜ÐÐÐ¢ 7 (3 ÐºÐ»Ð°ÑÑÐ°) ===" << std::endl;
 
-    // Çàäàíèå 1
-    std::cout << "\n--- Çàäàíèå 1 ---" << std::endl;
+    // Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 1
+    std::cout << "\n--- Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 1 ---" << std::endl;
     Variant7Task1 task1(8, new RandomGenerator());
-    std::cout << "Èñõîäíûé ìàññèâ: ";
+    std::cout << "Ð˜ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ Ð¼Ð°ÑÑÐ¸Ð²: ";
     task1.print_matrix();
     task1.Task();
-    std::cout << "Ïîñëå çàäàíèÿ 1: ";
+    std::cout << "ÐŸÐ¾ÑÐ»Ðµ Ð·Ð°Ð´Ð°Ð½Ð¸Ñ 1: ";
     task1.print_matrix();
 
-    // Çàäàíèå 2
-    std::cout << "\n--- Çàäàíèå 2 ---" << std::endl;
+    // Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 2
+    std::cout << "\n--- Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 2 ---" << std::endl;
     Variant7Task2 task2(8, new RandomGenerator());
-    std::cout << "Èñõîäíûé ìàññèâ: ";
+    std::cout << "Ð˜ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ Ð¼Ð°ÑÑÐ¸Ð²: ";
     task2.print_matrix();
     task2.Task();
-    std::cout << "Ïîñëå çàäàíèÿ 2: ";
+    std::cout << "ÐŸÐ¾ÑÐ»Ðµ Ð·Ð°Ð´Ð°Ð½Ð¸Ñ 2: ";
     task2.print_matrix();
 
-    // Çàäàíèå 3
-    std::cout << "\n--- Çàäàíèå 3 ---" << std::endl;
+    // Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 3
+    std::cout << "\n--- Ð—Ð°Ð´Ð°Ð½Ð¸Ðµ 3 ---" << std::endl;
     Variant7Task3 task3;
     Matrix D(5);
     D.fill_with(*new RandomGenerator());
     Matrix A = task3.execute(D);
-    std::cout << "Ìàññèâ D: " << D.to_string() << std::endl;
-    std::cout << "Ìàññèâ A: " << A.to_string() << std::endl;
+    std::cout << "ÐœÐ°ÑÑÐ¸Ð² D: " << D.to_string() << std::endl;
+    std::cout << "ÐœÐ°ÑÑÐ¸Ð² A: " << A.to_string() << std::endl;
 
     return 0;
 }

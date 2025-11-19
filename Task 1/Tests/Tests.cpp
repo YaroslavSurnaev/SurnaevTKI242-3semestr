@@ -16,7 +16,6 @@ using namespace miit::algebra;
 
 namespace MatrixLibTests
 {
-    // “естовый генератор с фиксированными значени€ми
     class TestGenerator : public Generator
     {
     private:
