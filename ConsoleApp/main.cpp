@@ -10,13 +10,12 @@ using namespace std;
 
 int main() {
     setlocale(LC_ALL, "Russian");
-    // Создаём товары
+
     Product chocolate("Шоколад", 50.0);
     Product candies("Конфеты", 30.0);
     ConfectioneryItem cake("Торт", 250.0, "клубника", 95);
     ConfectioneryItem cookies("Печенье", 40.0, "овсяное", 80);
 
-    // Магазины
     Store shop1("Магазин 1");
     shop1.addOrder(&chocolate);
     shop1.addOrder(&cake);
@@ -30,7 +29,6 @@ int main() {
 
     vector<Store*> shops = { &shop1, &shop2, &shop3 };
 
-    // Поставщики
     Supplier sup1("Поставщик А");
     sup1.addProduct(&chocolate);
     sup1.addProduct(&candies);
@@ -41,7 +39,6 @@ int main() {
 
     vector<Supplier*> suppliers = { &sup1, &sup2 };
 
-    // Производство
     ProductionRecord rec1(&chocolate, 100);
     ProductionRecord rec2(&candies, 200);
     ProductionRecord rec3(&cake, 50);
@@ -49,7 +46,6 @@ int main() {
 
     vector<ProductionRecord*> records = { &rec1, &rec2, &rec3, &rec4 };
 
-    // === ЗАДАНИЕ 1: магазины, заказавшие "Торт" ===
     cout << "1. Магазины, заказавшие 'Торт':" << endl;
     for (Store* s : shops) {
         if (s->hasProduct("Торт")) {
@@ -57,15 +53,12 @@ int main() {
         }
     }
 
-    // === ЗАДАНИЕ 2: товары от поставщика А ===
     cout << "\n2. Товары от 'Поставщик А':" << endl;
     sup1.showProducts();
 
-    // === ЗАДАНИЕ 3: ассортимент и цена "Торт" ===
     cout << "\n3. Информация о 'Торте':" << endl;
     cake.show();
 
-    // === ЗАДАНИЕ 4: самый популярный ===
     ConfectioneryItem* best = &cake;
     if (cookies.getPopularity() > best->getPopularity()) {
         best = &cookies;
@@ -73,7 +66,6 @@ int main() {
     cout << "\n4. Самый популярный товар:" << endl;
     best->show();
 
-    // === ЗАДАНИЕ 5: общая стоимость производства ===
     double total = 0;
     for (ProductionRecord* r : records) {
         total += r->getTotalCost();

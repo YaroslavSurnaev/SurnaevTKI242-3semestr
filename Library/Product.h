@@ -13,5 +13,5 @@ public:
     string getName() const { return name; }
     double getPrice() const { return price; }
 
-    virtual void show() const; // виртуальный Ч дл¤ полиморфизма
+    virtual void show() const;
 };

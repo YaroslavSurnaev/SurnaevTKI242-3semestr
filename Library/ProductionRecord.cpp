@@ -3,7 +3,7 @@
 using namespace std;
 
 ProductionRecord::ProductionRecord(Product* p, int q) : product(p), quantity(q) {
-    date = time(0); // текущее время
+    date = time(0);
 }
 
 double ProductionRecord::getTotalCost() const {

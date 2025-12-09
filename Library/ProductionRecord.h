@@ -6,7 +6,7 @@ using namespace std;
 class ProductionRecord {
     Product* product;
     int quantity;
-    time_t date; // простая дата
+    time_t date;
 public:
     ProductionRecord(Product* p, int q);
     double getTotalCost() const;
