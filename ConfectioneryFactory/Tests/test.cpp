@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+ï»¿#include <gtest/gtest.h>
 #include "Product.h"
 #include "ConfectioneryItem.h"
 #include "Store.h"
@@ -6,50 +6,50 @@
 #include "ProductionRecord.h"
 
 TEST(ProductTest, PriceIsStoredCorrectly) {
-    Product p("Øîêîëàä", 50.0);
+    Product p("Ð¨Ð¾ÐºÐ¾Ð»Ð°Ð´", 50.0);
     EXPECT_DOUBLE_EQ(p.getPrice(), 50.0);
-    EXPECT_EQ(p.getName(), "Øîêîëàä");
+    EXPECT_EQ(p.getName(), "Ð¨Ð¾ÐºÐ¾Ð»Ð°Ð´");
 }
 
 TEST(ConfectioneryItemTest, FlavorAndPopularity) {
-    ConfectioneryItem cake("Òîðò", 250.0, "êëóáíèêà", 95);
-    EXPECT_EQ(cake.getFlavor(), "êëóáíèêà");
+    ConfectioneryItem cake("Ð¢Ð¾Ñ€Ñ‚", 250.0, "ÐºÐ»ÑƒÐ±Ð½Ð¸ÐºÐ°", 95);
+    EXPECT_EQ(cake.getFlavor(), "ÐºÐ»ÑƒÐ±Ð½Ð¸ÐºÐ°");
     EXPECT_EQ(cake.getPopularity(), 95);
     EXPECT_DOUBLE_EQ(cake.getPrice(), 250.0);
 }
 
 TEST(StoreTest, StoreOrdersProduct) {
-    Store shop("Ìàãàçèí 1");
-    Product chocolate("Øîêîëàä", 50.0);
+    Store shop("ÐœÐ°Ð³Ð°Ð·Ð¸Ð½ 1");
+    Product chocolate("Ð¨Ð¾ÐºÐ¾Ð»Ð°Ð´", 50.0);
     shop.addOrder(&chocolate);
 
-    EXPECT_TRUE(shop.hasProduct("Øîêîëàä"));
-    EXPECT_FALSE(shop.hasProduct("Ïå÷åíüå"));
+    EXPECT_TRUE(shop.hasProduct("Ð¨Ð¾ÐºÐ¾Ð»Ð°Ð´"));
+    EXPECT_FALSE(shop.hasProduct("ÐŸÐµÑ‡ÐµÐ½ÑŒÐµ"));
 }
 
 TEST(SupplierTest, SupplierProvidesProduct) {
-    Supplier sup("Ïîñòàâùèê À");
-    Product candies("Êîíôåòû", 30.0);
+    Supplier sup("ÐŸÐ¾ÑÑ‚Ð°Ð²Ñ‰Ð¸Ðº Ð");
+    Product candies("ÐšÐ¾Ð½Ñ„ÐµÑ‚Ñ‹", 30.0);
     sup.addProduct(&candies);
 
     const auto& products = sup.getProducts();
     ASSERT_EQ(products.size(), 1);
-    EXPECT_EQ(products[0]->getName(), "Êîíôåòû");
+    EXPECT_EQ(products[0]->getName(), "ÐšÐ¾Ð½Ñ„ÐµÑ‚Ñ‹");
 }
 
 TEST(ProductionRecordTest, TotalCostCalculation) {
-    Product cake("Òîðò", 250.0);
+    Product cake("Ð¢Ð¾Ñ€Ñ‚", 250.0);
     ProductionRecord record(&cake, 3);
 
     EXPECT_DOUBLE_EQ(record.getTotalCost(), 750.0);
 }
 
 TEST(PolymorphismTest, VirtualShowWorks) {
-    Product* p1 = new Product("Îáû÷íûé", 10.0);
-    Product* p2 = new ConfectioneryItem("Òîðò", 250.0, "øîêîëàä", 90);
+    Product* p1 = new Product("ÐžÐ±Ñ‹Ñ‡Ð½Ñ‹Ð¹", 10.0);
+    Product* p2 = new ConfectioneryItem("Ð¢Ð¾Ñ€Ñ‚", 250.0, "ÑˆÐ¾ÐºÐ¾Ð»Ð°Ð´", 90);
 
-    EXPECT_EQ(p1->getName(), "Îáû÷íûé");
-    EXPECT_EQ(p2->getName(), "Òîðò");
+    EXPECT_EQ(p1->getName(), "ÐžÐ±Ñ‹Ñ‡Ð½Ñ‹Ð¹");
+    EXPECT_EQ(p2->getName(), "Ð¢Ð¾Ñ€Ñ‚");
     EXPECT_DOUBLE_EQ(p2->getPrice(), 250.0);
 
     delete p1;
