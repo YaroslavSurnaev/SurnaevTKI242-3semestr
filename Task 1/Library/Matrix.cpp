@@ -1,6 +1,8 @@
 #include "Matrix.h"
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
+#include <algorithm>
 
 namespace algebra
 {
@@ -8,34 +10,40 @@ namespace algebra
 
     Matrix::Matrix(size_t arr_size) : size(arr_size)
     {
-        data = new int[size] {};
+        data = std::make_unique<int[]>(size);
+        std::fill(data.get(), data.get() + size, 0);
     }
 
     Matrix::Matrix(const Matrix& other) : size(other.size)
     {
-        data = new int[size];
-        for (size_t i = 0; i < size; i++)
-        {
-            data[i] = other.data[i];
-        }
+        data = std::make_unique<int[]>(size);
+        std::copy(other.data.get(), other.data.get() + size, data.get());
     }
 
-    Matrix::~Matrix()
+    Matrix::Matrix(Matrix&& other) noexcept
+        : data(std::move(other.data)), size(other.size)
     {
-        delete[] data;
+        other.size = 0;
     }
 
     Matrix& Matrix::operator=(const Matrix& other)
     {
         if (this != &other)
         {
-            delete[] data;
+            data = std::make_unique<int[]>(other.size);
             size = other.size;
-            data = new int[size];
-            for (size_t i = 0; i < size; i++)
-            {
-                data[i] = other.data[i];
-            }
+            std::copy(other.data.get(), other.data.get() + size, data.get());
+        }
+        return *this;
+    }
+
+    Matrix& Matrix::operator=(Matrix&& other) noexcept
+    {
+        if (this != &other)
+        {
+            data = std::move(other.data);
+            size = other.size;
+            other.size = 0;
         }
         return *this;
     }
@@ -70,11 +78,17 @@ namespace algebra
         return ss.str();
     }
 
-    void Matrix::fill_with(Generator& generator)
+    void Matrix::fill(Generator& generator)
     {
         for (size_t i = 0; i < size; i++)
         {
             data[i] = generator.generate();
         }
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Matrix& matrix)
+    {
+        os << matrix.to_string();
+        return os;
     }
 }

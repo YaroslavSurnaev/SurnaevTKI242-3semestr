@@ -7,12 +7,17 @@ namespace algebra
     class RandomGenerator : public Generator
     {
     private:
-        const int MIN_VALUE = -1000;  //  онстанта дл€ минимального значени€
-        const int MAX_VALUE = 1000;   //  онстанта дл€ максимального значени€
+        static const int MIN_VALUE = -1000;
+        static const int MAX_VALUE = 1000;
         std::mt19937 gen;
 
     public:
         RandomGenerator();
+        RandomGenerator(const RandomGenerator&) = delete;
+        RandomGenerator& operator=(const RandomGenerator&) = delete;
+        RandomGenerator(RandomGenerator&&) noexcept = default;
+        RandomGenerator& operator=(RandomGenerator&&) noexcept = default;
+
         int generate() override;
     };
 }

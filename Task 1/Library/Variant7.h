@@ -1,32 +1,26 @@
 #pragma once
-#include "Exercise.h"
+#include "Task1.h"
+#include "Task2.h"
+#include "Task3.h"
 
 namespace algebra
 {
-    // Первый класс - задание 1
-    class Variant7Task1 : public Exercise
+    class Variant7
     {
-    public:
-        Variant7Task1(size_t size, Generator* gen);
-        void Task() override;
-    };
-
-    // Второй класс - задание 2
-    class Variant7Task2 : public Exercise
-    {
-    public:
-        Variant7Task2(size_t size, Generator* gen);
-        void Task() override;
-
     private:
-        bool contains_digit_1(int number);
-        int find_max_element();
-    };
+        Task1 task1;
+        Task2 task2;
+        Task3 task3;
+        Matrix original_matrix;
 
-    // Третий класс - задание 3
-    class Variant7Task3
-    {
     public:
-        Matrix execute(const Matrix& D);
+        Variant7(size_t size, Generator* gen = nullptr);
+
+        Matrix execute_task1();
+        Matrix execute_task2();
+        Matrix execute_task3(const Matrix& D);
+
+        void print_all() const;
+        Matrix get_original() const;
     };
 }

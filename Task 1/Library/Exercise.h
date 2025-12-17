@@ -1,6 +1,6 @@
 #pragma once
 #include "Matrix.h"
-#include "Generator.h"
+#include <memory>
 
 namespace algebra
 {
@@ -8,15 +8,26 @@ namespace algebra
     {
     protected:
         Matrix matrix;
-        Generator* generator;
+        std::unique_ptr<Generator> generator;
 
     public:
-        Exercise(size_t size, Generator* gen);
-        virtual ~Exercise();
+        explicit Exercise(size_t size, Generator* gen = nullptr);
+        virtual ~Exercise() = default;
 
-        virtual void Task() = 0; 
+        Exercise(const Exercise&) = delete;
+        Exercise& operator=(const Exercise&) = delete;
+        Exercise(Exercise&&) = default;
+        Exercise& operator=(Exercise&&) = default;
 
-        Matrix get_matrix() const;
-        void print_matrix() const;
+        virtual void Task1() = 0;
+        virtual void Task2() = 0;
+        virtual Matrix Task3(const Matrix& D) = 0;
+
+        void print() const;
+        Matrix get() const;
+
+    protected:
+        Matrix& access_matrix();
+        const Matrix& access_matrix() const;
     };
 }

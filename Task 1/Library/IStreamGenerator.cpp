@@ -2,11 +2,14 @@
 
 namespace algebra
 {
-    IStreamGenerator::IStreamGenerator(std::istream& in) : in(in) {}
+    IStreamGenerator::IStreamGenerator(std::istream& input_stream)
+        : in(input_stream)
+    {
+    }
 
     int IStreamGenerator::generate()
     {
-        int value = 0;
+        int value;
         in >> value;
         return value;
     }

@@ -10,7 +10,12 @@ namespace algebra
         std::istream& in;
 
     public:
-        IStreamGenerator(std::istream& in = std::cin);
+        explicit IStreamGenerator(std::istream& input_stream = std::cin);
+        IStreamGenerator(const IStreamGenerator&) = delete;
+        IStreamGenerator& operator=(const IStreamGenerator&) = delete;
+        IStreamGenerator(IStreamGenerator&&) noexcept = default;
+        IStreamGenerator& operator=(IStreamGenerator&&) noexcept = default;
+
         int generate() override;
     };
 }

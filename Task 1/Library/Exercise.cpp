@@ -1,26 +1,42 @@
 #include "Exercise.h"
 #include <iostream>
+#include "RandomGenerator.h"
+#include "ZeroGenerator.h"
+#include "ConstantGenerator.h"
 
 namespace algebra
 {
-    Exercise::Exercise(size_t size, Generator* gen)
-        : matrix(size), generator(gen)
+    Exercise::Exercise(size_t size, Generator* gen) : matrix(size)
     {
-        matrix.fill_with(*gen);
+        if (gen)
+        {
+            generator.reset(gen);
+            matrix.fill(*generator);
+        }
+        else
+        {
+            generator = std::make_unique<RandomGenerator>();
+            matrix.fill(*generator);
+        }
     }
 
-    Exercise::~Exercise()
+    void Exercise::print() const
     {
-        delete generator;
+        std::cout << matrix << std::endl;
     }
 
-    Matrix Exercise::get_matrix() const
+    Matrix Exercise::get() const
     {
         return matrix;
     }
 
-    void Exercise::print_matrix() const
+    Matrix& Exercise::access_matrix()
     {
-        std::cout << matrix.to_string() << std::endl;
+        return matrix;
+    }
+
+    const Matrix& Exercise::access_matrix() const
+    {
+        return matrix;
     }
 }
