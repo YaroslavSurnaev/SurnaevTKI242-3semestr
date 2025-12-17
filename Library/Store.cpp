@@ -4,22 +4,23 @@ using namespace std;
 
 Store::Store(string n) : name(n) {}
 
-void Store::addOrder(Product* p) {
-    orders.push_back(p);
+Store::~Store() {
+    for (auto* inv : invoices) {
+        delete inv;
+    }
 }
 
-bool Store::hasProduct(const string& productName) const {
-    for (Product* p : orders) {
-        if (p->getName() == productName)
-            return true;
-    }
-    return false;
+void Store::addOutgoingInvoice(OutgoingInvoice* invoice) {
+    invoices.push_back(invoice);
 }
 
-void Store::showOrders() const {
-    cout << "Магазин " << name << " заказал:" << endl;
-    for (Product* p : orders) {
-        cout << "  - ";
-        p->show();
+void Store::showInvoices() const {
+    cout << "Магазин " << name << " — расходные накладные:" << endl;
+    for (auto* inv : invoices) {
+        inv->show();
     }
+}
+
+string Store::getName() const {
+    return name;
 }

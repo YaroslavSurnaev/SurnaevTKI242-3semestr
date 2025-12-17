@@ -5,12 +5,10 @@ using namespace std;
 
 class ProductionRecord {
     Product* product;
-    int quantity;
     time_t date;
 public:
-    ProductionRecord(Product* p, int q);
+    ProductionRecord(Product* p);
     double getTotalCost() const;
     void show() const;
-    time_t getDate() const { return date; }
-    Product* getProduct() const { return product; }
+    Product* getProduct() const;
 };

@@ -1,57 +1,78 @@
 ﻿#include <gtest/gtest.h>
-#include "Product.h"
-#include "ConfectioneryItem.h"
+#include "Cake.h"
+#include "Cookie.h"
+#include "IncomingInvoice.h"
+#include "OutgoingInvoice.h"
+#include "ProductionRecord.h"
 #include "Store.h"
 #include "Supplier.h"
-#include "ProductionRecord.h"
 
-TEST(ProductTest, PriceIsStoredCorrectly) {
-    Product p("Шоколад", 50.0);
-    EXPECT_DOUBLE_EQ(p.getPrice(), 50.0);
-    EXPECT_EQ(p.getName(), "Шоколад");
+TEST(CakeTest, InitializationAndShow) {
+    Cake cake("Торт", 300.0, "шоколад", "круглый", 98);
+    EXPECT_EQ(cake.getName(), "Торт");
+    EXPECT_DOUBLE_EQ(cake.getPrice(), 300.0);
+    EXPECT_EQ(cake.getFlavor(), "шоколад");
+    EXPECT_EQ(cake.getPopularity(), 98);
 }
 
-TEST(ConfectioneryItemTest, FlavorAndPopularity) {
-    ConfectioneryItem cake("Торт", 250.0, "клубника", 95);
-    EXPECT_EQ(cake.getFlavor(), "клубника");
-    EXPECT_EQ(cake.getPopularity(), 95);
-    EXPECT_DOUBLE_EQ(cake.getPrice(), 250.0);
+TEST(CookieTest, Initialization) {
+    Cookie cookie("Печенье", 45.0, "овсянка", true, 85);
+    EXPECT_EQ(cookie.getName(), "Печенье");
+    EXPECT_DOUBLE_EQ(cookie.getPrice(), 45.0);
+    EXPECT_EQ(cookie.getFlavor(), "овсянка");
+    EXPECT_EQ(cookie.getPopularity(), 85);
+    EXPECT_TRUE(cookie.getIsGlazed());
 }
 
-TEST(StoreTest, StoreOrdersProduct) {
-    Store shop("Магазин 1");
-    Product chocolate("Шоколад", 50.0);
-    shop.addOrder(&chocolate);
-
-    EXPECT_TRUE(shop.hasProduct("Шоколад"));
-    EXPECT_FALSE(shop.hasProduct("Печенье"));
+TEST(IncomingInvoiceTest, TotalCostCalculation) {
+    Cake cake("Торт", 300.0, "шоколад", "круглый", 98);
+    IncomingInvoice invoice(&cake, 5, "Поставщик A");
+    EXPECT_EQ(invoice.getQuantity(), 5);
+    EXPECT_EQ(invoice.getSupplierName(), "Поставщик A");
+    EXPECT_DOUBLE_EQ(invoice.getProduct()->getPrice() * 5, 1500.0);
 }
 
-TEST(SupplierTest, SupplierProvidesProduct) {
-    Supplier sup("Поставщик А");
-    Product candies("Конфеты", 30.0);
-    sup.addProduct(&candies);
-
-    const auto& products = sup.getProducts();
-    ASSERT_EQ(products.size(), 1);
-    EXPECT_EQ(products[0]->getName(), "Конфеты");
+TEST(OutgoingInvoiceTest, StoreNameAndQuantity) {
+    Cookie cookie("Печенье", 40.0, "ваниль", false, 80);
+    OutgoingInvoice invoice(&cookie, 10, "Магазин 1");
+    EXPECT_EQ(invoice.getStoreName(), "Магазин 1");
+    EXPECT_EQ(invoice.getQuantity(), 10);
+    EXPECT_DOUBLE_EQ(invoice.getProduct()->getPrice() * 10, 400.0);
 }
 
-TEST(ProductionRecordTest, TotalCostCalculation) {
-    Product cake("Торт", 250.0);
-    ProductionRecord record(&cake, 3);
-
-    EXPECT_DOUBLE_EQ(record.getTotalCost(), 750.0);
+TEST(ProductionRecordTest, SingleItemCost) {
+    Cookie cookie("Печенье", 40.0, "ваниль", false, 80);
+    ProductionRecord record(&cookie);
+    EXPECT_DOUBLE_EQ(record.getTotalCost(), 40.0);
 }
 
-TEST(PolymorphismTest, VirtualShowWorks) {
-    Product* p1 = new Product("Обычный", 10.0);
-    Product* p2 = new ConfectioneryItem("Торт", 250.0, "шоколад", 90);
+TEST(SupplierTest, AddAndShowInvoices) {
+    Cake cake("Торт", 250.0, "клубника", "квадратный", 90);
+    Supplier sup("Поставщик X");
+    sup.addIncomingInvoice(new IncomingInvoice(&cake, 3, "Поставщик X"));
 
-    EXPECT_EQ(p1->getName(), "Обычный");
-    EXPECT_EQ(p2->getName(), "Торт");
-    EXPECT_DOUBLE_EQ(p2->getPrice(), 250.0);
+    EXPECT_NO_THROW(sup.showInvoices());
+}
 
-    delete p1;
-    delete p2;
+TEST(StoreTest, AddOutgoingInvoice) {
+    Cookie cookie("Печенье", 50.0, "шоколад", true, 90);
+    Store shop("Магазин Y");
+    shop.addOutgoingInvoice(new OutgoingInvoice(&cookie, 7, "Магазин Y"));
+    EXPECT_NO_THROW(shop.showInvoices());
+}
+
+TEST(PolymorphismTest, VirtualShow) {
+    Cake* cake = new Cake("Торт", 300.0, "шоколад", "круглый", 98);
+    Cookie* cookie = new Cookie("Печенье", 45.0, "овсянка", true, 85);
+
+    Product* p1 = cake;
+    Product* p2 = cookie;
+
+    EXPECT_EQ(p1->getName(), "Торт");
+    EXPECT_EQ(p2->getName(), "Печенье");
+    EXPECT_DOUBLE_EQ(p1->getPrice(), 300.0);
+    EXPECT_DOUBLE_EQ(p2->getPrice(), 45.0);
+
+    delete cake;
+    delete cookie;
 }

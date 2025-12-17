@@ -8,10 +8,8 @@ protected:
     double price;
 public:
     Product(string n = "", double p = 0.0);
-    virtual ~Product() {}
-
-    string getName() const { return name; }
-    double getPrice() const { return price; }
-
-    virtual void show() const;
+    virtual ~Product() = default;
+    string getName() const;
+    double getPrice() const;
+    virtual void show() const = 0;
 };

@@ -1,15 +1,16 @@
 ﻿#pragma once
-#include "Product.h"
+#include "OutgoingInvoice.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 class Store {
     string name;
-    vector<Product*> orders;
+    vector<OutgoingInvoice*> invoices;
 public:
     Store(string n = "");
-    void addOrder(Product* p);
-    bool hasProduct(const string& productName) const;
-    void showOrders() const;
-    string getName() const { return name; }
+    ~Store();
+    void addOutgoingInvoice(OutgoingInvoice* invoice);
+    void showInvoices() const;
+    string getName() const;
 };

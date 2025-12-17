@@ -4,14 +4,23 @@ using namespace std;
 
 Supplier::Supplier(string n) : name(n) {}
 
-void Supplier::addProduct(Product* p) {
-    products.push_back(p);
+Supplier::~Supplier() {
+    for (auto* inv : invoices) {
+        delete inv;
+    }
 }
 
-void Supplier::showProducts() const {
-    cout << "Поставщик " << name << " поставляет:" << endl;
-    for (Product* p : products) {
-        cout << "  - ";
-        p->show();
+void Supplier::addIncomingInvoice(IncomingInvoice* invoice) {
+    invoices.push_back(invoice);
+}
+
+void Supplier::showInvoices() const {
+    cout << "Поставщик " << name << " — приходные накладные:" << endl;
+    for (auto* inv : invoices) {
+        inv->show();
     }
+}
+
+string Supplier::getName() const {
+    return name;
 }

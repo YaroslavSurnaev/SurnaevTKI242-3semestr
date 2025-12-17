@@ -1,76 +1,36 @@
 ﻿#include <iostream>
 #include <vector>
-#include "Product.h"
-#include "ConfectioneryItem.h"
-#include "Supplier.h"
+#include "Cake.h"
+#include "Cookie.h"
 #include "Store.h"
+#include "Supplier.h"
 #include "ProductionRecord.h"
 
 using namespace std;
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    Cake cake("Шоколадный торт", 300.0, "шоколад", "круглый", 98);
+    Cookie cookie("Овсяное печенье", 45.0, "овсянка", true, 85);
 
-    Product chocolate("Шоколад", 50.0);
-    Product candies("Конфеты", 30.0);
-    ConfectioneryItem cake("Торт", 250.0, "клубника", 95);
-    ConfectioneryItem cookies("Печенье", 40.0, "овсяное", 80);
+    Supplier sup("Поставщик A");
+    sup.addIncomingInvoice(new IncomingInvoice(&cake, 10, "Поставщик A"));
+    sup.addIncomingInvoice(new IncomingInvoice(&cookie, 50, "Поставщик A"));
 
-    Store shop1("Магазин 1");
-    shop1.addOrder(&chocolate);
-    shop1.addOrder(&cake);
+    Store shop("Магазин 1");
+    shop.addOutgoingInvoice(new OutgoingInvoice(&cake, 2, "Магазин 1"));
+    shop.addOutgoingInvoice(new OutgoingInvoice(&cookie, 10, "Магазин 1"));
 
-    Store shop2("Магазин 2");
-    shop2.addOrder(&candies);
-    shop2.addOrder(&cookies);
+    ProductionRecord rec1(&cake);
+    ProductionRecord rec2(&cookie);
 
-    Store shop3("Магазин 3");
-    shop3.addOrder(&cake);
+    cout << "Производство" << endl;
+    rec1.show();
+    rec2.show();
 
-    vector<Store*> shops = { &shop1, &shop2, &shop3 };
-
-    Supplier sup1("Поставщик А");
-    sup1.addProduct(&chocolate);
-    sup1.addProduct(&candies);
-
-    Supplier sup2("Поставщик Б");
-    sup2.addProduct(&cake);
-    sup2.addProduct(&cookies);
-
-    vector<Supplier*> suppliers = { &sup1, &sup2 };
-
-    ProductionRecord rec1(&chocolate, 100);
-    ProductionRecord rec2(&candies, 200);
-    ProductionRecord rec3(&cake, 50);
-    ProductionRecord rec4(&cookies, 150);
-
-    vector<ProductionRecord*> records = { &rec1, &rec2, &rec3, &rec4 };
-
-    cout << "1. Магазины, заказавшие 'Торт':" << endl;
-    for (Store* s : shops) {
-        if (s->hasProduct("Торт")) {
-            cout << "  - " << s->getName() << endl;
-        }
-    }
-
-    cout << "\n2. Товары от 'Поставщик А':" << endl;
-    sup1.showProducts();
-
-    cout << "\n3. Информация о 'Торте':" << endl;
-    cake.show();
-
-    ConfectioneryItem* best = &cake;
-    if (cookies.getPopularity() > best->getPopularity()) {
-        best = &cookies;
-    }
-    cout << "\n4. Самый популярный товар:" << endl;
-    best->show();
-
-    double total = 0;
-    for (ProductionRecord* r : records) {
-        total += r->getTotalCost();
-    }
-    cout << "\n5. Общая стоимость производства: " << total << " руб." << endl;
+    cout << "\nНакладные" << endl;
+    sup.showInvoices();
+    cout << "\n" << string(50, '-') << "\n" << endl;
+    shop.showInvoices();
 
     return 0;
 }

@@ -1,15 +1,16 @@
 ﻿#pragma once
-#include "Product.h"
+#include "IncomingInvoice.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 class Supplier {
     string name;
-    vector<Product*> products;
+    vector<IncomingInvoice*> invoices;
 public:
     Supplier(string n = "");
-    void addProduct(Product* p);
-    void showProducts() const;
-    string getName() const { return name; }
-    const vector<Product*>& getProducts() const { return products; }
+    ~Supplier();
+    void addIncomingInvoice(IncomingInvoice* invoice);
+    void showInvoices() const;
+    string getName() const;
 };

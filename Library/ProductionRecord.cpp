@@ -2,16 +2,20 @@
 #include <iostream>
 using namespace std;
 
-ProductionRecord::ProductionRecord(Product* p, int q) : product(p), quantity(q) {
+ProductionRecord::ProductionRecord(Product* p) : product(p) {
     date = time(0);
 }
 
 double ProductionRecord::getTotalCost() const {
-    return product->getPrice() * quantity;
+    return product->getPrice();
 }
 
 void ProductionRecord::show() const {
     cout << "Произведено: ";
     product->show();
-    cout << "  Количество: " << quantity << ", Стоимость: " << getTotalCost() << " руб." << endl;
+    cout << "  Стоимость: " << getTotalCost() << " руб." << endl;
+}
+
+Product* ProductionRecord::getProduct() const {
+    return product;
 }
