@@ -1,24 +1,31 @@
 #include "Task3.h"
+#include <iostream>
 
 namespace algebra
 {
-    Matrix Task3::Task3(const Matrix& D)
+    void Task3::execute()
     {
-        Matrix A(D.get_size());
+        Matrix<int> result(matrix.size());
 
-        for (size_t i = 0; i < D.get_size(); i++)
+        for (size_t i = 0; i < matrix.size(); i++)
         {
-            A[i] = calculate_value(D[i], i);
+            if (i < 10) 
+            {
+                if ((i + 1) % 2 != 0) 
+                {
+                    result[i] = matrix[i] - (i + 1);
+                }
+                else 
+                {
+                    result[i] = matrix[i] + (i + 1);
+                }
+            }
+            else 
+            {
+                result[i] = matrix[i]; 
+            }
         }
 
-        return A;
-    }
-
-    int Task3::calculate_value(int value, size_t index) const
-    {
-        if (index % 2 == 0)
-            return value + static_cast<int>(index);
-        else
-            return value - static_cast<int>(index);
+        std::cout << "Task 3 result: " << result.to_string() << std::endl;
     }
 }

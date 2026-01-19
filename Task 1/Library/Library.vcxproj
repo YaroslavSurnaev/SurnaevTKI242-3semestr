@@ -142,33 +142,19 @@
   <ItemGroup>
     <ClInclude Include="ConstantGenerator.h" />
     <ClInclude Include="Exercise.h" />
-    <ClInclude Include="framework.h" />
     <ClInclude Include="Generator.h" />
-    <ClInclude Include="IStreamGenerator.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Task1.h" />
     <ClInclude Include="Task2.h" />
     <ClInclude Include="Task3.h" />
-    <ClInclude Include="Variant7.h" />
-    <ClInclude Include="ZeroGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantGenerator.cpp" />
     <ClCompile Include="Exercise.cpp" />
-    <ClCompile Include="IStreamGenerator.cpp" />
     <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="Task1.cpp" />
     <ClCompile Include="Task2.cpp" />
     <ClCompile Include="Task3.cpp" />
-    <ClCompile Include="Variant7.cpp" />
-    <ClCompile Include="ZeroGenerator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Tests\Tests.vcxproj">
-      <Project>{42ceea31-8d97-4afd-81b1-88055532ce15}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

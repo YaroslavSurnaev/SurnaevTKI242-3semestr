@@ -2,13 +2,18 @@
 
 namespace algebra
 {
-    ConstantGenerator::ConstantGenerator(int constant_value)
-        : value(constant_value)
-    {
-    }
-
     int ConstantGenerator::generate()
     {
-        return value;
+        switch (type)
+        {
+        case MANUAL:
+        {
+            int value;
+            std::cin >> value;
+            return value;
+        }
+        case RANDOM:
+            return min_val + rand() % (max_val - min_val + 1);
+        }
     }
 }

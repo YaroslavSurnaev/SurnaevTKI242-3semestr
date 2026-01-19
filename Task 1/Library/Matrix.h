@@ -1,34 +1,33 @@
 #pragma once
+#include <cstddef>
 #include <string>
-#include <memory>
+#include <sstream>
+#include <iostream>
 #include "Generator.h"
 
 namespace algebra
 {
+    template<typename T>
     class Matrix
     {
     private:
-        std::unique_ptr<int[]> data;
-        size_t size;
-
+        T* data;
+        size_t size_val;
     public:
         Matrix();
-        explicit Matrix(size_t size);
-
+        Matrix(const size_t size);
         Matrix(const Matrix& other);
         Matrix(Matrix&& other) noexcept;
+        ~Matrix();
         Matrix& operator=(const Matrix& other);
         Matrix& operator=(Matrix&& other) noexcept;
-        ~Matrix() = default;
 
-        int& operator[](size_t index);
-        const int& operator[](size_t index) const;
+        T& operator[](size_t index);
+        const T& operator[](size_t index) const;
 
-        size_t get_size() const;
-
+        size_t size() const;
         std::string to_string() const;
-        void fill(Generator& generator);
 
-        friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+        void fill(Generator& gen);
     };
 }

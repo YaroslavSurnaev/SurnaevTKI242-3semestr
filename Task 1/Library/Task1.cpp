@@ -1,27 +1,12 @@
 #include "Task1.h"
-#include <stdexcept>
+#include <iostream>
 
 namespace algebra
 {
-    void Task1::Task1()
+    size_t findMaxElementIndex(const Matrix<int>& matrix)
     {
-        Matrix& matrix = access_matrix();
-
-        if (matrix.get_size() == 0) return;
-
-        size_t max_index = find_max_index();
-        matrix[max_index] = -matrix[max_index];
-    }
-
-    size_t Task1::find_max_index() const
-    {
-        const Matrix& matrix = access_matrix();
-
-        if (matrix.get_size() == 0)
-            throw std::runtime_error("Matrix is empty");
-
         size_t max_index = 0;
-        for (size_t i = 1; i < matrix.get_size(); i++)
+        for (size_t i = 1; i < matrix.size(); i++)
         {
             if (matrix[i] > matrix[max_index])
             {
@@ -29,5 +14,25 @@ namespace algebra
             }
         }
         return max_index;
+    }
+
+    void Task1::execute()
+    {
+        Matrix<int> result = matrix;
+        size_t max_index = findMaxElementIndex(matrix);
+
+        if (max_index < matrix.size())
+        {
+            int max_value = result[max_index];
+            result[max_index] = -max_value;
+            std::cout << "Task 1 result: " << result.to_string() << std::endl;
+            std::cout << "Replaced element at position " << max_index + 1
+                << " (value: " << max_value << ") with " << -max_value << std::endl;
+        }
+        else
+        {
+            std::cout << "Task 1 result: " << result.to_string() << std::endl;
+            std::cout << "Array is empty" << std::endl;
+        }
     }
 }

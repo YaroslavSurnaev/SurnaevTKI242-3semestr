@@ -1,94 +1,120 @@
 #include "Matrix.h"
 #include <sstream>
-#include <stdexcept>
-#include <iostream>
-#include <algorithm>
+#include <utility>
 
 namespace algebra
 {
-    Matrix::Matrix() : data(nullptr), size(0) {}
+    template<typename T>
+    Matrix<T>::Matrix() : data(nullptr), size_val(0) {}
 
-    Matrix::Matrix(size_t arr_size) : size(arr_size)
+    template<typename T>
+    Matrix<T>::Matrix(const size_t size) : size_val(size)
     {
-        data = std::make_unique<int[]>(size);
-        std::fill(data.get(), data.get() + size, 0);
-    }
-
-    Matrix::Matrix(const Matrix& other) : size(other.size)
-    {
-        data = std::make_unique<int[]>(size);
-        std::copy(other.data.get(), other.data.get() + size, data.get());
-    }
-
-    Matrix::Matrix(Matrix&& other) noexcept
-        : data(std::move(other.data)), size(other.size)
-    {
-        other.size = 0;
-    }
-
-    Matrix& Matrix::operator=(const Matrix& other)
-    {
-        if (this != &other)
-        {
-            data = std::make_unique<int[]>(other.size);
-            size = other.size;
-            std::copy(other.data.get(), other.data.get() + size, data.get());
-        }
-        return *this;
-    }
-
-    Matrix& Matrix::operator=(Matrix&& other) noexcept
-    {
-        if (this != &other)
-        {
-            data = std::move(other.data);
-            size = other.size;
-            other.size = 0;
-        }
-        return *this;
-    }
-
-    int& Matrix::operator[](size_t index)
-    {
-        if (index >= size) throw std::out_of_range("Index out of range");
-        return data[index];
-    }
-
-    const int& Matrix::operator[](size_t index) const
-    {
-        if (index >= size) throw std::out_of_range("Index out of range");
-        return data[index];
-    }
-
-    size_t Matrix::get_size() const
-    {
-        return size;
-    }
-
-    std::string Matrix::to_string() const
-    {
-        std::stringstream ss;
-        ss << "[";
+        data = new T[size];
         for (size_t i = 0; i < size; i++)
         {
-            ss << data[i];
-            if (i < size - 1) ss << ", ";
+            data[i] = 0;
         }
-        ss << "]";
+    }
+
+    template<typename T>
+    Matrix<T>::Matrix(const Matrix& other) : size_val(other.size_val)
+    {
+        data = new T[size_val];
+        for (size_t i = 0; i < size_val; i++)
+        {
+            data[i] = other.data[i];
+        }
+    }
+
+    template<typename T>
+    Matrix<T>::Matrix(Matrix&& other) noexcept
+        : data(other.data), size_val(other.size_val)
+    {
+        other.data = nullptr;
+        other.size_val = 0;
+    }
+
+    template<typename T>
+    Matrix<T>::~Matrix()
+    {
+        delete[] data;
+    }
+
+    template<typename T>
+    Matrix<T>& Matrix<T>::operator=(const Matrix& other)
+    {
+        if (this != &other)
+        {
+            delete[] data;
+            size_val = other.size_val;
+            data = new T[size_val];
+            for (size_t i = 0; i < size_val; i++)
+            {
+                data[i] = other.data[i];
+            }
+        }
+        return *this;
+    }
+
+    template<typename T>
+    Matrix<T>& Matrix<T>::operator=(Matrix&& other) noexcept
+    {
+        if (this != &other)
+        {
+            delete[] data;
+            data = other.data;
+            size_val = other.size_val;
+
+            other.data = nullptr;
+            other.size_val = 0;
+        }
+        return *this;
+    }
+
+    template<typename T>
+    T& Matrix<T>::operator[](size_t index)
+    {
+        return data[index];
+    }
+
+    template<typename T>
+    const T& Matrix<T>::operator[](size_t index) const
+    {
+        return data[index];
+    }
+
+    template<typename T>
+    size_t Matrix<T>::size() const
+    {
+        return size_val;
+    }
+
+    template<typename T>
+    std::string Matrix<T>::to_string() const
+    {
+        std::stringstream ss;
+        ss << "{ ";
+        for (size_t i = 0; i < size_val; i++)
+        {
+            ss << data[i];
+            if (i < size_val - 1)
+            {
+                ss << ", ";
+            }
+        }
+        ss << " }";
         return ss.str();
     }
 
-    void Matrix::fill(Generator& generator)
+    template<typename T>
+    void Matrix<T>::fill(Generator& gen)
     {
-        for (size_t i = 0; i < size; i++)
+        for (size_t i = 0; i < size_val; i++)
         {
-            data[i] = generator.generate();
+            data[i] = gen.generate();
         }
     }
 
-    std::ostream& operator<<(std::ostream& os, const Matrix& matrix)
-    {
-        os << matrix.to_string();
-        return os;
-    }
+    template class Matrix<int>;
 }

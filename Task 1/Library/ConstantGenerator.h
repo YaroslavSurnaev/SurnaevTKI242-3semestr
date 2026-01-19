@@ -1,19 +1,23 @@
 #pragma once
 #include "Generator.h"
+#include <iostream>
+#include <cstdlib>
 
 namespace algebra
 {
+    enum FillType { MANUAL, RANDOM };
+
     class ConstantGenerator : public Generator
     {
     private:
-        const int value;
+        FillType type;
+        int constant_value;
+        int min_val;
+        int max_val;
 
     public:
-        explicit ConstantGenerator(int constant_value);
-        ConstantGenerator(const ConstantGenerator&) = delete;
-        ConstantGenerator& operator=(const ConstantGenerator&) = delete;
-        ConstantGenerator(ConstantGenerator&&) noexcept = default;
-        ConstantGenerator& operator=(ConstantGenerator&&) noexcept = default;
+        ConstantGenerator(FillType t, int val1 = 0, int val2 = 0)
+            : type(t), constant_value(val1), min_val(val1), max_val(val2) {}
 
         int generate() override;
     };
