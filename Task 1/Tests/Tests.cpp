@@ -45,7 +45,6 @@ namespace MatrixLibraryTests
             matrix[3] = 15;
             matrix[4] = 7;
 
-            // Используем правильный конструктор
             ConstantGenerator generator(RANDOM, 1, 100);
             Task1 task(matrix, &generator);
 
