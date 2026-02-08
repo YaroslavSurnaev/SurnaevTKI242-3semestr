@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/ConfectioneryFactory/">
+    <Project Path="../ConsoleApp/ConsoleApp.vcxproj" Id="2d6bcbf9-20e8-4ff1-b916-a877f72a881a" />
+    <Project Path="../Library/Library.vcxproj" Id="7fa0bd0e-f10d-43d1-a8e2-efc552392712" />
+    <Project Path="Tests/Tests.vcxproj" Id="e1fd70ce-6ba7-4465-a3d7-d4668e4c6830" />
+  </Folder>
+</Solution>
