@@ -1,15 +1,26 @@
 #pragma once
 #include "Product.h"
 #include <string>
-using namespace std;
 
-class Cake : public Product {
-    string flavor;
-    string shape;
-    int popularity;
-public:
-    Cake(string n = "", double p = 0.0, string f = "", string s = "круглый", int pop = 0);
-    void show() const override;
-    string getFlavor() const;
-    int getPopularity() const;
-};
+namespace ConfectioneryFactory {
+    class Cake : public Product {
+    private:
+        std::string flavor;
+        int layers;
+        bool hasFrosting;
+
+    public:
+        Cake(const std::string& name, double price, int quantity,
+            const std::string& flavor, int layers, bool hasFrosting);
+
+        std::string getFlavor() const;
+        int getLayers() const;
+        bool getHasFrosting() const;
+
+        bool hasFlavorLayersFrosting(const std::string& checkFlavor,
+            int checkLayers,
+            bool checkFrosting) const;
+
+        std::string getDescription() const override;
+    };
+}

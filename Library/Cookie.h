@@ -1,16 +1,22 @@
 #pragma once
 #include "Product.h"
 #include <string>
-using namespace std;
 
-class Cookie : public Product {
-    string flavor;
-    bool isGlazed;
-    int popularity;
-public:
-    Cookie(string n = "", double p = 0.0, string f = "", bool glazed = false, int pop = 0);
-    void show() const override;
-    string getFlavor() const;
-    int getPopularity() const;
-};
+namespace ConfectioneryFactory {
+    class Cookie : public Product {
+    private:
+        std::string shape;
+        bool isGlazed;
 
+    public:
+        Cookie(const std::string& name, double price, int quantity,
+            const std::string& shape, bool isGlazed);
+
+        std::string getShape() const;
+        bool getIsGlazed() const;
+
+        bool hasShapeGlaze(const std::string& checkShape, bool checkGlaze) const;
+
+        std::string getDescription() const override;
+    };
+}

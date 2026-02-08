@@ -1,36 +1,67 @@
 ﻿#include <iostream>
 #include <vector>
-#include "Cake.h"
-#include "Cookie.h"
-#include "Store.h"
-#include "Supplier.h"
-#include "ProductionRecord.h"
+#include <memory>
+#include "..\Library\Product.h"
+#include "..\Library\Cake.h"
+#include "..\Library\Cookie.h"
+#include "..\Library\Chocolate.h"
+#include "..\Library\Store.h"
 
-using namespace std;
+using namespace ConfectioneryFactory;
 
 int main() {
-    Cake cake("Шоколадный торт", 300.0, "шоколад", "круглый", 98);
-    Cookie cookie("Овсяное печенье", 45.0, "овсянка", true, 85);
+    std::cout << "Confectionery Factory\n\n";
 
-    Supplier sup("Поставщик A");
-    sup.addIncomingInvoice(new IncomingInvoice(&cake, 10, "Поставщик A"));
-    sup.addIncomingInvoice(new IncomingInvoice(&cookie, 50, "Поставщик A"));
+    Store factory;
 
-    Store shop("Магазин 1");
-    shop.addOutgoingInvoice(new OutgoingInvoice(&cake, 2, "Магазин 1"));
-    shop.addOutgoingInvoice(new OutgoingInvoice(&cookie, 10, "Магазин 1"));
+    auto* cakesDept = factory.getDepartment("Cakes");
+    auto* cookiesDept = factory.getDepartment("Cookies");
+    auto* chocolatesDept = factory.getDepartment("Chocolates");
 
-    ProductionRecord rec1(&cake);
-    ProductionRecord rec2(&cookie);
+    cakesDept->addProduct(std::make_unique<Cake>("Black Forest", 1200, 8, "Chocolate-Cherry", 3, true));
+    cakesDept->addProduct(std::make_unique<Cake>("Carrot Cake", 950, 12, "Carrot-Walnut", 2, true));
 
-    cout << "Производство" << endl;
-    rec1.show();
-    rec2.show();
+    cookiesDept->addProduct(std::make_unique<Cookie>("Oatmeal", 75, 50, "Round", true));
+    cookiesDept->addProduct(std::make_unique<Cookie>("Shortbread", 60, 60, "Star", false));
 
-    cout << "\nНакладные" << endl;
-    sup.showInvoices();
-    cout << "\n" << string(50, '-') << "\n" << endl;
-    shop.showInvoices();
+    chocolatesDept->addProduct(std::make_unique<Chocolate>("Dark 70%", 250, 30, "70", "Hazelnut"));
+    chocolatesDept->addProduct(std::make_unique<Chocolate>("Milk", 180, 40, "35", "Caramel"));
+
+    std::cout << "Search product 'forest':\n";
+    auto result = factory.findProductDepartment("forest");
+    if (result.first && result.second) {
+        std::cout << "Found: " << result.first->getName()
+            << " in " << result.second->getName() << "\n";
+    }
+    std::cout << "\n";
+
+    std::cout << "Cakes available:\n";
+    auto cakesList = factory.getDepartmentProducts("Cakes");
+    for (const auto& cake : cakesList) {
+        std::cout << cake << "\n";
+    }
+    std::cout << "\n";
+
+    factory.addSale("Cakes", 9600);
+    factory.addSale("Cookies", 4500);
+    std::cout << "Sales: Cakes = " << factory.getDepartmentSales("Cakes") << " RUB\n\n";
+
+    std::vector<std::pair<Product*, int>> order;
+    auto cakes = cakesDept->findProduct("Black Forest");
+    if (!cakes.empty()) {
+        order.push_back({ cakes[0], 2 });
+    }
+
+    std::cout << "Order cost:\n";
+    std::cout << "Retail: " << factory.calculatePurchase(order, false) << " RUB\n";
+    std::cout << "Wholesale: " << factory.calculatePurchase(order, true) << " RUB\n\n";
+
+    std::cout << "Availability checks:\n";
+    bool cakeAvail = factory.checkCake("Black Forest", "Chocolate-Cherry", 3, true);
+    std::cout << "Black Forest (3 layers, frosting): " << (cakeAvail ? "Yes" : "No") << "\n";
+
+    bool cookieAvail = factory.checkCookie("Oatmeal", "Round", true);
+    std::cout << "Oatmeal cookie (round, glazed): " << (cookieAvail ? "Yes" : "No") << "\n";
 
     return 0;
 }

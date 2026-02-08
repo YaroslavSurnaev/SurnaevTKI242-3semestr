@@ -1,21 +1,32 @@
 #include "Cake.h"
-#include <iostream>
-using namespace std;
 
-Cake::Cake(string n, double p, string f, string s, int pop)
-    : Product(n, p), flavor(f), shape(s), popularity(pop) {
-}
+namespace ConfectioneryFactory {
+    Cake::Cake(const std::string& name, double price, int quantity,
+        const std::string& flavor, int layers, bool hasFrosting)
+        : Product(name, price, quantity, "Cakes"),
+        flavor(flavor), layers(layers), hasFrosting(hasFrosting) {
+    }
 
-void Cake::show() const {
-    cout << "Торт: " << name << ", вкус: " << flavor
-        << ", форма: " << shape
-        << ", цена: " << getPrice() << " руб., популярность: " << popularity << "/100" << endl;
-}
+    std::string Cake::getFlavor() const { return flavor; }
+    int Cake::getLayers() const { return layers; }
+    bool Cake::getHasFrosting() const { return hasFrosting; }
 
-string Cake::getFlavor() const {
-    return flavor;
-}
+    bool Cake::hasFlavorLayersFrosting(const std::string& checkFlavor,
+        int checkLayers,
+        bool checkFrosting) const {
+        if (quantity == 0) return false;
 
-int Cake::getPopularity() const {
-    return popularity;
+        bool flavorOk = checkFlavor.empty() || flavor == checkFlavor;
+        bool layersOk = (checkLayers == -1) || layers == checkLayers;
+        bool frostingOk = !checkFrosting || hasFrosting;
+
+        return flavorOk && layersOk && frostingOk;
+    }
+
+    std::string Cake::getDescription() const {
+        return "Cake: " + name + ", Flavor: " + flavor +
+            ", Layers: " + std::to_string(layers) +
+            ", Frosting: " + (hasFrosting ? "Yes" : "No") +
+            ", Price: " + std::to_string(price) + " RUB";
+    }
 }

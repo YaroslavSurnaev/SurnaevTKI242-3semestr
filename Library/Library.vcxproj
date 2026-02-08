@@ -140,24 +140,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Cake.h" />
+    <ClInclude Include="Chocolate.h" />
     <ClInclude Include="Cookie.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="IncomingInvoice.h" />
-    <ClInclude Include="OutgoingInvoice.h" />
     <ClInclude Include="Product.h" />
-    <ClInclude Include="ProductionRecord.h" />
     <ClInclude Include="Store.h" />
-    <ClInclude Include="Supplier.h" />
+    <ClInclude Include="Department.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cake.cpp" />
+    <ClCompile Include="Chocolate.cpp" />
     <ClCompile Include="Cookie.cpp" />
-    <ClCompile Include="IncomingInvoice.cpp" />
-    <ClCompile Include="OutgoingInvoice.cpp" />
     <ClCompile Include="Product.cpp" />
-    <ClCompile Include="ProductionRecord.cpp" />
     <ClCompile Include="Store.cpp" />
-    <ClCompile Include="Supplier.cpp" />
+    <ClCompile Include="Department.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
